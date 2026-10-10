@@ -18,6 +18,7 @@ import {
   Sparkles,
   ExternalLink,
 } from "lucide-react";
+import Magnetic from "@/components/motion/Magnetic";
 
 interface RoleItem {
   id: string;
@@ -336,38 +337,44 @@ export default function FooterDial() {
           </div>
         </div>
 
-        {/* Direct PDF Download Button */}
+        {/* Direct PDF Download Button with Magnetic motion */}
         <div className="my-6 flex flex-col sm:flex-row items-center gap-4">
-          <a
-            href="/NHIEM_VU_5_NHOM_1_LIEN_MINH_GIAI_CAP.pdf"
-            download="NHIEM_VU_5_NHOM_1_LIEN_MINH_GIAI_CAP.pdf"
-            className="inline-flex items-center space-x-2.5 rounded-full bg-white text-black font-semibold text-xs sm:text-sm px-8 py-3.5 hover:bg-neutral-200 active:scale-95 transition-all shadow-2xl"
-          >
-            <Download className="w-4 h-4 text-black" />
-            <span>Tải Báo Cáo PDF Chính Thức (Nộp Bài)</span>
-          </a>
+          <Magnetic strength={0.25}>
+            <a
+              href="/NHIEM_VU_5_NHOM_1_LIEN_MINH_GIAI_CAP.pdf"
+              download="NHIEM_VU_5_NHOM_1_LIEN_MINH_GIAI_CAP.pdf"
+              className="inline-flex items-center space-x-2.5 rounded-full bg-white text-black font-semibold text-xs sm:text-sm px-8 py-3.5 hover:bg-neutral-200 active:scale-95 transition-all shadow-2xl"
+            >
+              <Download className="w-4 h-4 text-black" />
+              <span>Tải Báo Cáo PDF Chính Thức (Nộp Bài)</span>
+            </a>
+          </Magnetic>
 
-          <a
-            href="https://cnxh-week5-nhom1.vercel.app/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center space-x-2 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-xs sm:text-sm px-6 py-3.5 hover:text-white hover:bg-neutral-800 transition-all"
-          >
-            <ExternalLink className="w-4 h-4 text-neutral-400" />
-            <span>Trải nghiệm Live Web Vercel</span>
-          </a>
+          <Magnetic strength={0.25}>
+            <a
+              href="https://cnxh-week5-nhom1.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center space-x-2 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-xs sm:text-sm px-6 py-3.5 hover:text-white hover:bg-neutral-800 transition-all active:scale-95"
+            >
+              <ExternalLink className="w-4 h-4 text-neutral-400" />
+              <span>Trải nghiệm Live Web Vercel</span>
+            </a>
+          </Magnetic>
         </div>
 
         {/* Bottom Bar */}
         <div className="w-full flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-400 font-mono pt-8 border-t border-neutral-900 gap-4 mt-8">
           <span>© 2026 NHÓM 1 • GIÁO TRÌNH BỘ GIÁO DỤC (2021) • ĐẠI HỌC QUỐC GIA</span>
-          <button
-            onClick={scrollToTop}
-            className="flex items-center space-x-1.5 hover:text-white transition-colors cursor-pointer"
-          >
-            <span>LÊN ĐẦU TRANG</span>
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
+          <Magnetic strength={0.2}>
+            <button
+              onClick={scrollToTop}
+              className="flex items-center space-x-1.5 hover:text-white transition-colors cursor-pointer"
+            >
+              <span>LÊN ĐẦU TRANG</span>
+              <ArrowUp className="w-3.5 h-3.5" />
+            </button>
+          </Magnetic>
         </div>
       </div>
     </footer>

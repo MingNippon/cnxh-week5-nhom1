@@ -11,6 +11,7 @@ import StrategicSolutionsSection from "@/components/dial/StrategicSolutionsSecti
 import StudyGuideComparisonTable from "@/components/dial/StudyGuideComparisonTable";
 import MinimalistFeatureGrid from "@/components/dial/MinimalistFeatureGrid";
 import FooterDial from "@/components/dial/FooterDial";
+import AllianceScene3D from "@/components/canvas/AllianceScene3D";
 
 export default function Home() {
   const editorialRef = useRef<HTMLDivElement>(null);
@@ -32,6 +33,13 @@ export default function Home() {
     ["#000000", "#F4F4F6", "#F4F4F6", "#000000"]
   );
 
+  // Smooth 3D WebGL canvas opacity: active on dark sections, fading out on light editorial
+  const canvasOpacity = useTransform(
+    scrollYProgress,
+    [0.05, 0.28, 0.72, 0.95],
+    [0.45, 0.0, 0.0, 0.45]
+  );
+
   return (
     <main className="relative min-h-screen text-white selection:bg-white selection:text-black antialiased print:bg-white print:text-black bg-transparent">
       {/* Dynamic Smooth Background Canvas: Smooth gradual color morphing without cut lines */}
@@ -39,6 +47,14 @@ export default function Home() {
         className="fixed inset-0 pointer-events-none -z-30 will-change-transform"
         style={{ backgroundColor }}
       />
+
+      {/* 3D WebGL Canvas Layer (threeui & watermelon-platform benchmark) */}
+      <motion.div
+        className="fixed inset-0 pointer-events-none -z-20 will-change-transform"
+        style={{ opacity: canvasOpacity }}
+      >
+        <AllianceScene3D />
+      </motion.div>
 
       {/* Floating Navigation Pill */}
       <NavbarPill />

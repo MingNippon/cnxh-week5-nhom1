@@ -81,38 +81,35 @@ export default function StudyGuideComparisonTable() {
           </p>
         </div>
 
-        {/* Dial Navigation Segmented Control */}
+        {/* Dial Navigation Segmented Control with Morphing Tabs layoutId */}
         <div className="flex items-center space-x-2 p-1.5 rounded-full bg-neutral-950 border border-neutral-800 w-fit mb-12 max-w-full overflow-x-auto">
-          <button
-            onClick={() => setActiveTab("forces")}
-            className={`px-4 py-2 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-              activeTab === "forces"
-                ? "bg-white text-black shadow-md font-semibold"
-                : "text-neutral-400 hover:text-white"
-            }`}
-          >
-            4 Lực lượng nòng cốt
-          </button>
-          <button
-            onClick={() => setActiveTab("pillars")}
-            className={`px-4 py-2 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-              activeTab === "pillars"
-                ? "bg-white text-black shadow-md font-semibold"
-                : "text-neutral-400 hover:text-white"
-            }`}
-          >
-            3 Trụ cột nội dung liên minh
-          </button>
-          <button
-            onClick={() => setActiveTab("faq")}
-            className={`px-4 py-2 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-              activeTab === "faq"
-                ? "bg-white text-black shadow-md font-semibold"
-                : "text-neutral-400 hover:text-white"
-            }`}
-          >
-            Câu hỏi thi & Thảo luận cốt lõi
-          </button>
+          {[
+            { id: "forces", label: "4 Lực lượng nòng cốt" },
+            { id: "pillars", label: "3 Trụ cột nội dung liên minh" },
+            { id: "faq", label: "Câu hỏi thi & Thảo luận cốt lõi" },
+          ].map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`relative px-4 py-2 rounded-full text-xs font-medium transition-colors whitespace-nowrap z-10 ${
+                  isActive
+                    ? "text-black font-semibold"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="study-tab-active-indicator"
+                    className="absolute inset-0 bg-white rounded-full shadow-md -z-10"
+                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                  />
+                )}
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Tab 1: 4 Core Forces Comparison Table */}

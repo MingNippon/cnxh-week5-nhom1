@@ -13,6 +13,7 @@ import {
   Layers,
   ChevronRight,
 } from "lucide-react";
+import SpotlightCard from "@/components/motion/SpotlightCard";
 
 interface SolutionItem {
   number: string;
@@ -146,10 +147,11 @@ export default function StrategicSolutionsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative rounded-2xl bg-neutral-950/70 border border-neutral-800/80 p-6 sm:p-8 hover:border-neutral-700 transition-all duration-300 overflow-hidden"
               >
-                {/* Subtle Hover Radial Gradient */}
-                <div className="absolute inset-0 bg-radial-gradient from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <SpotlightCard
+                  className="group relative rounded-2xl bg-neutral-950/70 border border-neutral-800/80 p-6 sm:p-8 hover:border-neutral-700 transition-all duration-300"
+                  spotlightColor="rgba(255, 255, 255, 0.06)"
+                >
 
                 <div className="relative z-10 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                   {/* Left Column: Number, Title, Mechanism */}
@@ -207,6 +209,7 @@ export default function StrategicSolutionsSection() {
                     </div>
                   </div>
                 </div>
+                </SpotlightCard>
               </motion.div>
             );
           })}

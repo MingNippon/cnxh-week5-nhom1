@@ -17,6 +17,8 @@ import {
   Truck,
   Package,
 } from "lucide-react";
+import BorderBeam from "@/components/motion/BorderBeam";
+import SpotlightCard from "@/components/motion/SpotlightCard";
 
 export default function AllianceOSDashboard() {
   const [activeTab, setActiveTab] = useState<"overview" | "chain" | "principles">(
@@ -53,7 +55,10 @@ export default function AllianceOSDashboard() {
         </div>
 
         {/* macOS / Dial Window Chrome */}
-        <div className="rounded-2xl border border-neutral-800 bg-neutral-950/90 shadow-[0_20px_70px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden">
+        <div className="relative rounded-2xl border border-neutral-800 bg-neutral-950/90 shadow-[0_20px_70px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden">
+          {/* Luminous Border Beam Traveling Around the Window */}
+          <BorderBeam size={320} duration={12} colorFrom="#F59E0B" colorTo="#38BDF8" />
+
           {/* Window Title Bar */}
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-800/80 bg-neutral-900/40">
             {/* Window Traffic Dots */}
@@ -69,38 +74,35 @@ export default function AllianceOSDashboard() {
               <span>Alliance OS — v2.4 (Hệ thống điều phối liên minh)</span>
             </div>
 
-            {/* Segmented Tab Switcher */}
+            {/* Segmented Tab Switcher with Morphing Tabs layoutId */}
             <div className="flex rounded-lg bg-neutral-900 p-1 border border-neutral-800 text-xs font-medium">
-              <button
-                onClick={() => setActiveTab("overview")}
-                className={`px-3 py-1 rounded-md transition-all ${
-                  activeTab === "overview"
-                    ? "bg-white text-black shadow-sm font-semibold"
-                    : "text-neutral-400 hover:text-white"
-                }`}
-              >
-                Tổng quan
-              </button>
-              <button
-                onClick={() => setActiveTab("chain")}
-                className={`px-3 py-1 rounded-md transition-all ${
-                  activeTab === "chain"
-                    ? "bg-white text-black shadow-sm font-semibold"
-                    : "text-neutral-400 hover:text-white"
-                }`}
-              >
-                Chuỗi giá trị 4 Nhà
-              </button>
-              <button
-                onClick={() => setActiveTab("principles")}
-                className={`px-3 py-1 rounded-md transition-all ${
-                  activeTab === "principles"
-                    ? "bg-white text-black shadow-sm font-semibold"
-                    : "text-neutral-400 hover:text-white"
-                }`}
-              >
-                3 Nguyên tắc
-              </button>
+              {[
+                { id: "overview", label: "Tổng quan" },
+                { id: "chain", label: "Chuỗi giá trị 4 Nhà" },
+                { id: "principles", label: "3 Nguyên tắc" },
+              ].map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as any)}
+                    className={`relative px-3 py-1 rounded-md transition-colors z-10 ${
+                      isActive
+                        ? "text-black font-semibold"
+                        : "text-neutral-400 hover:text-white"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="os-active-tab-indicator"
+                        className="absolute inset-0 bg-white rounded-md shadow-sm -z-10"
+                        transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                      />
+                    )}
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -218,7 +220,7 @@ export default function AllianceOSDashboard() {
                       {/* Featured 4.0 Modern Logistics & Processing Photo Banner */}
                       <div className="relative w-full h-44 rounded-2xl overflow-hidden border border-neutral-800 group">
                         <img
-                          src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80"
+                          src="/images/logistics_4nha.jpg"
                           alt="Mô hình 4 Nhà thời đại 4.0: Chuỗi logistics và chế biến hiện đại"
                           loading="lazy"
                           decoding="async"

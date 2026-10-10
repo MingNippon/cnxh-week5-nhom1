@@ -15,6 +15,7 @@ import {
   Layers,
   BookOpen,
 } from "lucide-react";
+import SpotlightCard from "@/components/motion/SpotlightCard";
 
 interface ForceVisual {
   id: "cong-nhan" | "nong-dan" | "tri-thuc" | "doanh-nhan";
@@ -36,8 +37,7 @@ const FORCES: ForceVisual[] = [
     roleBadge: "Lực lượng lãnh đạo liên minh",
     techChip: "Công nghiệp & Tự động hóa 4.0",
     icon: Factory,
-    image:
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/cong_nhan.jpg",
     headline: "Hạt nhân chính trị, đại diện phương thức sản xuất tiên tiến.",
     description:
       "Giai cấp công nhân giữ vai trò lãnh đạo khối liên minh thông qua đội tiên phong là Đảng Cộng sản Việt Nam. Công nhân hiện đại làm chủ các dây chuyền tự động hóa, robot công nghiệp và kinh tế dữ liệu số.",
@@ -55,47 +55,44 @@ const FORCES: ForceVisual[] = [
     roleBadge: "Đồng minh chiến lược tự nhiên",
     techChip: "Nông nghiệp sinh thái & Kinh tế số",
     icon: Wheat,
-    image:
-      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/nong_dan.jpg",
     headline: "Lực lượng đông đảo nhất, bảo đảm an ninh lương thực quốc gia.",
     description:
-      "Nông dân là nền tảng xã hội vững chắc của khối liên minh. Trong thời kỳ mới, người nông dân chuyển đổi từ sản xuất truyền thống sang nông nghiệp công nghệ cao, kinh tế tuần hoàn và chuỗi giá trị nông sản sạch.",
+      "Nông dân là bạn đồng minh tự nhiên và trung thành nhất của công nhân. Thời đại mới, người nông dân chuyển từ sản xuất nhỏ lẻ sang nông nghiệp công nghệ cao, nông nghiệp tuần hoàn và làm chủ nông thôn mới.",
     specs: [
       { label: "Quy mô", value: "Đông đảo nhất xã hội" },
-      { label: "Trụ đỡ", value: "An ninh lương thực" },
-      { label: "Chuyển đổi", value: "Nông thôn mới 4.0" },
+      { label: "Chiến lược", value: "An ninh lương thực" },
+      { label: "Chuyển đổi", value: "Nông dân số & Sinh thái" },
     ],
     deepAcademicDetail:
-      "Không có sự ủng hộ và liên minh tự nguyện của giai cấp nông dân thì cách mạng không thể thắng lợi và chế độ xã hội chủ nghĩa không thể đứng vững. Nông dân là lực lượng cung cấp nguồn nhân lực, lương thực thực phẩm và gìn giữ văn hóa truyền thống của dân tộc.",
+      "C.Mác và V.I. Lênin từng chỉ rõ: không có sự ủng hộ và liên minh của nông dân, cuộc cách mạng của giai cấp vô sản sẽ biến thành một 'bài đơn ca bi ai'. Nông dân vừa là lực lượng kinh tế trọng yếu, vừa là chỗ dựa vững chắc cho ổn định chính trị - xã hội.",
   },
   {
     id: "tri-thuc",
     title: "Đội ngũ Trí thức",
-    roleBadge: "Lực lượng lao động sáng tạo đặc biệt",
-    techChip: "R&D & Đột phá khoa học công nghệ",
+    roleBadge: "Hạt nhân sáng tạo đặc biệt",
+    techChip: "R&D, Khoa học & Đổi mới sáng tạo",
     icon: FlaskConical,
-    image:
-      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
-    headline: "Hạt nhân sáng tạo tri thức, cầu nối công nghệ với thực tiễn.",
+    image: "/images/tri_thuc.jpg",
+    headline: "Cầu nối đưa tri thức công nghệ thế giới vào đời sống sản xuất.",
     description:
-      "Tầng lớp lao động trí óc đặc biệt, có vai trò quyết định trong việc nghiên cứu, sáng tạo và chuyển giao tiến bộ khoa học kỹ thuật vào sản xuất công nghiệp và đời sống nông thôn.",
+      "Trí thức là lực lượng lao động trí óc đặc biệt, có vai trò quyết định trong sáng tạo tri thức, chuyển giao công nghệ mới và tư vấn phản biện đường lối chính sách của Đảng và Nhà nước.",
     specs: [
-      { label: "Bản chất", value: "Sáng tạo tri thức" },
-      { label: "Động lực", value: "Khoa học & Đổi mới" },
-      { label: "Ứng dụng", value: "Chuyển giao số hóa" },
+      { label: "Bản chất", value: "Lao động trí óc sáng tạo" },
+      { label: "Sứ mệnh 4.0", value: "Kinh tế tri thức & AI" },
+      { label: "Kết nối", value: "Gắn kết Viện - Trường - Doanh nghiệp" },
     ],
     deepAcademicDetail:
-      "Trong thời đại kinh tế tri thức và cuộc CMCN 4.0, trí thức không chỉ nghiên cứu cơ bản mà trực tiếp trở thành lực lượng sản xuất trực tiếp. Trí thức đóng vai trò tư vấn chính sách, phản biện xã hội và đào tạo nguồn nhân lực chất lượng cao cho đất nước.",
+      "Trong thời đại cách mạng công nghiệp lần thứ tư, tri thức khoa học trở thành lực lượng sản xuất trực tiếp. Trí thức đóng vai trò hạt nhân gắn kết công nghệ với công nghiệp của công nhân và đồng ruộng của nông dân, nâng tầm giá trị gia tăng quốc gia.",
   },
   {
     id: "doanh-nhan",
     title: "Đội ngũ Doanh nhân",
-    roleBadge: "Tiên phong quản trị & Thị trường",
-    techChip: "Huy động nguồn lực & Hội nhập toàn cầu",
+    roleBadge: "Quản trị & Động lực thị trường",
+    techChip: "Chuỗi giá trị & Hội nhập kinh tế",
     icon: Briefcase,
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
-    headline: "Tổ chức sản xuất, khơi thông nguồn vốn và chuỗi cung ứng.",
+    image: "/images/doanh_nhan.jpg",
+    headline: "Lực lượng tổ chức sản xuất, đưa sản phẩm Việt vươn tầm quốc tế.",
     description:
       "Doanh nhân quản lý, huy động các nguồn lực phát triển kinh tế thị trường định hướng XHCN. Tạo việc làm, tiêu thụ nông sản và đưa thương hiệu quốc gia vươn tầm thị trường quốc tế.",
     specs: [
@@ -123,8 +120,11 @@ export default function CoreForcesVisualShowcase() {
       className="relative text-white py-28 px-6 sm:px-12 transition-colors duration-700"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Academic Overview Box: Vị trí trung tâm của Cơ cấu xã hội - giai cấp */}
-        <div className="mb-20 p-8 rounded-3xl bg-neutral-950/70 border border-neutral-800/80 backdrop-blur-xl">
+        {/* Academic Overview Box with SpotlightCard */}
+        <SpotlightCard
+          className="mb-20 p-8 rounded-3xl bg-neutral-950/70 border border-neutral-800/80 backdrop-blur-xl"
+          spotlightColor="rgba(245, 158, 11, 0.08)"
+        >
           <div className="flex items-center space-x-2.5 text-xs font-mono text-amber-400 uppercase tracking-widest mb-3">
             <BookOpen className="w-4 h-4" />
             <span>CHUYÊN ĐỀ 1: CƠ CẤU XÃ HỘI - GIAI CẤP TRONG THỜI KỲ QUÁ ĐỘ</span>
@@ -161,7 +161,7 @@ export default function CoreForcesVisualShowcase() {
               </p>
             </div>
           </div>
-        </div>
+        </SpotlightCard>
 
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -179,7 +179,7 @@ export default function CoreForcesVisualShowcase() {
           </p>
         </div>
 
-        {/* Dial-style Segmented Force Switcher Pills */}
+        {/* Morphing Animated Tabs with layoutId (Dial / Motion Primitives benchmark) */}
         <div className="flex justify-start sm:justify-center mb-10 overflow-x-auto pb-2 scrollbar-none">
           <div className="inline-flex rounded-full bg-neutral-900/90 p-1.5 border border-neutral-800 text-xs font-medium backdrop-blur-md">
             {FORCES.map((force) => {
@@ -190,12 +190,19 @@ export default function CoreForcesVisualShowcase() {
                 <button
                   key={force.id}
                   onClick={() => setActiveForceId(force.id)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all whitespace-nowrap ${
+                  className={`relative flex items-center space-x-2 px-4 py-2 rounded-full transition-colors whitespace-nowrap z-10 ${
                     isActive
-                      ? "bg-white text-black font-semibold shadow-md"
+                      ? "text-black font-semibold"
                       : "text-neutral-400 hover:text-white"
                   }`}
                 >
+                  {isActive && (
+                    <motion.div
+                      layoutId="forces-tab-active-indicator"
+                      className="absolute inset-0 bg-white rounded-full shadow-md -z-10"
+                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                    />
+                  )}
                   <Icon className="w-3.5 h-3.5" />
                   <span>{force.title}</span>
                 </button>
@@ -269,10 +276,10 @@ export default function CoreForcesVisualShowcase() {
                 <div className="flex flex-wrap gap-5 mt-6 pt-5 border-t border-white/10">
                   {currentForce.specs.map((sp, idx) => (
                     <div key={idx} className="flex flex-col">
-                      <span className="text-[10px] font-mono text-neutral-400 uppercase">
+                      <span className="text-[11px] font-mono text-neutral-400 uppercase">
                         {sp.label}
                       </span>
-                      <span className="text-xs font-semibold text-white tracking-tight">
+                      <span className="text-sm font-semibold text-white tracking-tight">
                         {sp.value}
                       </span>
                     </div>
@@ -282,42 +289,6 @@ export default function CoreForcesVisualShowcase() {
             </div>
           </motion.div>
         </AnimatePresence>
-
-        {/* 4 Thumbnails Strip Below for Quick Switching */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-          {FORCES.map((force) => {
-            const isSelected = force.id === activeForceId;
-
-            return (
-              <button
-                key={force.id}
-                onClick={() => setActiveForceId(force.id)}
-                className={`relative rounded-2xl overflow-hidden border p-2 text-left transition-all group ${
-                  isSelected
-                    ? "border-white bg-neutral-900"
-                    : "border-neutral-800/80 bg-neutral-950/70 hover:border-neutral-700"
-                }`}
-              >
-                <div className="w-full h-20 rounded-xl overflow-hidden mb-2 relative">
-                  <img
-                    src={force.image}
-                    alt={force.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/30" />
-                </div>
-                <span className="text-xs font-semibold text-white block truncate">
-                  {force.title}
-                </span>
-                <span className="text-[10px] text-neutral-400 font-mono block truncate">
-                  {force.roleBadge}
-                </span>
-              </button>
-            );
-          })}
-        </div>
       </div>
     </section>
   );

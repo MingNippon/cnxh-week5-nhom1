@@ -1,6 +1,7 @@
 "use client";
 
 import { Download, Layers } from "lucide-react";
+import Magnetic from "@/components/motion/Magnetic";
 
 export default function NavbarPill() {
   const handleDownloadPdf = () => {
@@ -66,15 +67,17 @@ export default function NavbarPill() {
           </button>
         </nav>
 
-        {/* Direct Download Button (Downloads File directly, NO Chrome print) */}
-        <button
-          onClick={handleDownloadPdf}
-          className="flex items-center space-x-1.5 rounded-full bg-white text-black font-medium px-3.5 py-1.5 hover:bg-neutral-200 active:scale-95 transition-all shadow-md"
-          title="Tải trực tiếp file PDF chính thức để nộp bài"
-        >
-          <Download className="w-3.5 h-3.5" />
-          <span className="tracking-tight font-semibold">Tải PDF nộp bài</span>
-        </button>
+        {/* Direct Download Button with Magnetic cursor pull */}
+        <Magnetic strength={0.3}>
+          <button
+            onClick={handleDownloadPdf}
+            className="flex items-center space-x-1.5 rounded-full bg-white text-black font-medium px-3.5 py-1.5 hover:bg-neutral-200 active:scale-95 transition-all shadow-md"
+            title="Tải trực tiếp file PDF chính thức để nộp bài"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span className="tracking-tight font-semibold">Tải PDF nộp bài</span>
+          </button>
+        </Magnetic>
       </div>
     </header>
   );
