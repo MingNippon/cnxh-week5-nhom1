@@ -8,6 +8,7 @@ import {
   Building2,
   Tractor,
   CheckCircle2,
+  AlertTriangle,
   ArrowRight,
   Sliders,
   Activity,
@@ -19,6 +20,49 @@ import {
 } from "lucide-react";
 import BorderBeam from "@/components/motion/BorderBeam";
 import SpotlightCard from "@/components/motion/SpotlightCard";
+
+function SpringSwitch({
+  checked,
+  onChange,
+  ariaLabel,
+}: {
+  checked: boolean;
+  onChange: () => void;
+  ariaLabel?: string;
+}) {
+  return (
+    <motion.button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={ariaLabel}
+      onClick={onChange}
+      whileTap={{ scale: 0.9 }}
+      whileHover={{ scale: 1.05 }}
+      className={`relative w-12 h-7 rounded-full cursor-pointer transition-colors duration-300 focus:outline-none select-none flex-shrink-0 ${
+        checked
+          ? "bg-white shadow-[0_0_18px_rgba(255,255,255,0.45)]"
+          : "bg-neutral-800/90 border border-neutral-700/80 shadow-inner hover:bg-neutral-800"
+      }`}
+    >
+      <motion.span
+        className="absolute top-[4px] left-0 w-5 h-5 rounded-full pointer-events-none"
+        animate={{
+          x: checked ? 24 : 4,
+          backgroundColor: checked ? "#000000" : "#a3a3a3",
+          boxShadow: checked
+            ? "0 2px 5px rgba(0, 0, 0, 0.35)"
+            : "0 1px 3px rgba(0, 0, 0, 0.5)",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 600,
+          damping: 32,
+        }}
+      />
+    </motion.button>
+  );
+}
 
 export default function AllianceOSDashboard() {
   const [activeTab, setActiveTab] = useState<"overview" | "chain" | "principles">(
@@ -32,6 +76,15 @@ export default function AllianceOSDashboard() {
   const [principle3, setPrinciple3] = useState(true);
 
   const allPrinciplesActive = principle1 && principle2 && principle3;
+  const activePrinciplesCount = [principle1, principle2, principle3].filter(Boolean).length;
+  const systemStability =
+    activePrinciplesCount === 3
+      ? 98.4
+      : activePrinciplesCount === 2
+      ? 64.2
+      : activePrinciplesCount === 1
+      ? 28.6
+      : 8.5;
 
   return (
     <section
@@ -193,25 +246,39 @@ export default function AllianceOSDashboard() {
                         <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest">
                           MÔ PHỎNG DÒNG CHẢY LIÊN KẾT:
                         </span>
-                        <div className="flex items-center space-x-1.5 rounded-full bg-neutral-900 p-1 border border-neutral-800 text-[11px]">
+                        <div className="flex items-center space-x-1 rounded-full bg-neutral-900 p-1 border border-neutral-800 text-[11px]">
                           <button
                             onClick={() => setChainFlowMode("value")}
-                            className={`px-3 py-1 rounded-full transition-all ${
+                            className={`relative px-3 py-1 rounded-full transition-colors z-10 ${
                               chainFlowMode === "value"
-                                ? "bg-white text-black font-semibold"
+                                ? "text-black font-semibold"
                                 : "text-neutral-400 hover:text-white"
                             }`}
                           >
+                            {chainFlowMode === "value" && (
+                              <motion.div
+                                layoutId="chain-flow-active-pill"
+                                className="absolute inset-0 bg-white rounded-full shadow-sm -z-10"
+                                transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                              />
+                            )}
                             Dòng tiền & Giá trị
                           </button>
                           <button
                             onClick={() => setChainFlowMode("product")}
-                            className={`px-3 py-1 rounded-full transition-all ${
+                            className={`relative px-3 py-1 rounded-full transition-colors z-10 ${
                               chainFlowMode === "product"
-                                ? "bg-white text-black font-semibold"
+                                ? "text-black font-semibold"
                                 : "text-neutral-400 hover:text-white"
                             }`}
                           >
+                            {chainFlowMode === "product" && (
+                              <motion.div
+                                layoutId="chain-flow-active-pill"
+                                className="absolute inset-0 bg-white rounded-full shadow-sm -z-10"
+                                transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                              />
+                            )}
                             Dòng sản phẩm & Công nghệ
                           </button>
                         </div>
@@ -335,97 +402,171 @@ export default function AllianceOSDashboard() {
                         <h3 className="text-xl font-semibold text-white tracking-tight">
                           3 Nguyên tắc bất biến bảo đảm khối liên minh
                         </h3>
+                        <p className="text-xs text-neutral-400 mt-1">
+                          Bật / tắt thử các công tắc bên dưới để mô phỏng tương tác và theo dõi phản ứng tức thì của hệ thống đo lường bên phải.
+                        </p>
                       </div>
 
                       <div className="space-y-3">
                         {/* Principle 1 */}
-                        <div className="p-3.5 rounded-xl bg-neutral-900/60 border border-neutral-800 flex items-center justify-between">
+                        <motion.div
+                          animate={{
+                            borderColor: principle1 ? "rgba(38, 38, 38, 1)" : "rgba(239, 68, 68, 0.4)",
+                            backgroundColor: principle1 ? "rgba(23, 23, 23, 0.6)" : "rgba(23, 23, 23, 0.25)",
+                          }}
+                          transition={{ duration: 0.25 }}
+                          className="p-3.5 rounded-xl border flex items-center justify-between gap-4"
+                        >
                           <div>
-                            <span className="text-xs font-semibold text-white block">
-                              1. Vai trò lãnh đạo của Giai cấp Công nhân
-                            </span>
-                            <span className="text-[11px] text-neutral-400">
-                              Bảo đảm định hướng XHCN thông qua Đảng Cộng sản.
+                            <div className="flex items-center space-x-2">
+                              <span className="text-xs font-semibold text-white block">
+                                1. Vai trò lãnh đạo của Giai cấp Công nhân
+                              </span>
+                              <AnimatePresence>
+                                {!principle1 && (
+                                  <motion.span
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30"
+                                  >
+                                    ĐÃ TẮT
+                                  </motion.span>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                            <span className="text-[11px] text-neutral-400 mt-0.5 block">
+                              Bảo đảm định hướng XHCN thông qua Đảng Cộng sản Việt Nam.
                             </span>
                           </div>
-                          <button
-                            onClick={() => setPrinciple1(!principle1)}
-                            className={`w-11 h-6 rounded-full transition-colors p-0.5 flex items-center ${
-                              principle1 ? "bg-white justify-end" : "bg-neutral-800 justify-start"
-                            }`}
-                          >
-                            <span
-                              className={`w-5 h-5 rounded-full ${
-                                principle1 ? "bg-black" : "bg-neutral-500"
-                              }`}
-                            />
-                          </button>
-                        </div>
+                          <SpringSwitch
+                            checked={principle1}
+                            onChange={() => setPrinciple1(!principle1)}
+                            ariaLabel="Nguyên tắc 1: Vai trò lãnh đạo của GCCN"
+                          />
+                        </motion.div>
 
                         {/* Principle 2 */}
-                        <div className="p-3.5 rounded-xl bg-neutral-900/60 border border-neutral-800 flex items-center justify-between">
+                        <motion.div
+                          animate={{
+                            borderColor: principle2 ? "rgba(38, 38, 38, 1)" : "rgba(239, 68, 68, 0.4)",
+                            backgroundColor: principle2 ? "rgba(23, 23, 23, 0.6)" : "rgba(23, 23, 23, 0.25)",
+                          }}
+                          transition={{ duration: 0.25 }}
+                          className="p-3.5 rounded-xl border flex items-center justify-between gap-4"
+                        >
                           <div>
-                            <span className="text-xs font-semibold text-white block">
-                              2. Hài hòa các lợi ích (Trọng tâm kinh tế)
-                            </span>
-                            <span className="text-[11px] text-neutral-400">
+                            <div className="flex items-center space-x-2">
+                              <span className="text-xs font-semibold text-white block">
+                                2. Hài hòa các lợi ích (Trọng tâm kinh tế)
+                              </span>
+                              <AnimatePresence>
+                                {!principle2 && (
+                                  <motion.span
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30"
+                                  >
+                                    ĐÃ TẮT
+                                  </motion.span>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                            <span className="text-[11px] text-neutral-400 mt-0.5 block">
                               Lợi ích kinh tế là chất xi măng gắn kết bền chặt.
                             </span>
                           </div>
-                          <button
-                            onClick={() => setPrinciple2(!principle2)}
-                            className={`w-11 h-6 rounded-full transition-colors p-0.5 flex items-center ${
-                              principle2 ? "bg-white justify-end" : "bg-neutral-800 justify-start"
-                            }`}
-                          >
-                            <span
-                              className={`w-5 h-5 rounded-full ${
-                                principle2 ? "bg-black" : "bg-neutral-500"
-                              }`}
-                            />
-                          </button>
-                        </div>
+                          <SpringSwitch
+                            checked={principle2}
+                            onChange={() => setPrinciple2(!principle2)}
+                            ariaLabel="Nguyên tắc 2: Hài hòa các lợi ích"
+                          />
+                        </motion.div>
 
                         {/* Principle 3 */}
-                        <div className="p-3.5 rounded-xl bg-neutral-900/60 border border-neutral-800 flex items-center justify-between">
+                        <motion.div
+                          animate={{
+                            borderColor: principle3 ? "rgba(38, 38, 38, 1)" : "rgba(239, 68, 68, 0.4)",
+                            backgroundColor: principle3 ? "rgba(23, 23, 23, 0.6)" : "rgba(23, 23, 23, 0.25)",
+                          }}
+                          transition={{ duration: 0.25 }}
+                          className="p-3.5 rounded-xl border flex items-center justify-between gap-4"
+                        >
                           <div>
-                            <span className="text-xs font-semibold text-white block">
-                              3. Xuất phát từ sự tự nguyện của các giai cấp
-                            </span>
-                            <span className="text-[11px] text-neutral-400">
+                            <div className="flex items-center space-x-2">
+                              <span className="text-xs font-semibold text-white block">
+                                3. Xuất phát từ sự tự nguyện của các giai cấp
+                              </span>
+                              <AnimatePresence>
+                                {!principle3 && (
+                                  <motion.span
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30"
+                                  >
+                                    ĐÃ TẮT
+                                  </motion.span>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                            <span className="text-[11px] text-neutral-400 mt-0.5 block">
                               Không mệnh lệnh hành chính gượng ép.
                             </span>
                           </div>
-                          <button
-                            onClick={() => setPrinciple3(!principle3)}
-                            className={`w-11 h-6 rounded-full transition-colors p-0.5 flex items-center ${
-                              principle3 ? "bg-white justify-end" : "bg-neutral-800 justify-start"
-                            }`}
-                          >
-                            <span
-                              className={`w-5 h-5 rounded-full ${
-                                principle3 ? "bg-black" : "bg-neutral-500"
-                              }`}
-                            />
-                          </button>
-                        </div>
+                          <SpringSwitch
+                            checked={principle3}
+                            onChange={() => setPrinciple3(!principle3)}
+                            ariaLabel="Nguyên tắc 3: Xuất phát từ sự tự nguyện"
+                          />
+                        </motion.div>
                       </div>
 
-                      {/* Integrity Status Card */}
-                      <div
-                        className={`p-3.5 rounded-xl border text-xs flex items-center space-x-2 transition-all ${
-                          allPrinciplesActive
-                            ? "bg-emerald-950/30 border-emerald-500/40 text-emerald-300"
-                            : "bg-red-950/30 border-red-500/40 text-red-300"
-                        }`}
-                      >
-                        <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                        <span>
-                          {allPrinciplesActive
-                            ? "Trạng thái tối ưu: Toàn bộ 3 nguyên tắc đều được kích hoạt, liên minh vững chắc."
-                            : "Cảnh báo: Vi phạm nguyên tắc sẽ khiến khối liên minh mất phương hướng hoặc tan rã."}
-                        </span>
-                      </div>
+                      {/* Integrity Status Card with AnimatePresence */}
+                      <AnimatePresence mode="wait">
+                        {allPrinciplesActive ? (
+                          <motion.div
+                            key="optimal"
+                            initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                            transition={{ duration: 0.25 }}
+                            className="p-4 rounded-xl border bg-emerald-950/30 border-emerald-500/40 text-emerald-300 text-xs flex items-center space-x-3 shadow-[0_0_20px_rgba(16,185,129,0.12)]"
+                          >
+                            <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-emerald-400" />
+                            <div>
+                              <span className="font-semibold block text-emerald-200">
+                                Trạng thái tối ưu: Toàn bộ 3 nguyên tắc đều được kích hoạt
+                              </span>
+                              <span className="text-emerald-300/80 text-[11px] mt-0.5 block">
+                                Khối liên minh giữ vững định hướng XHCN, bảo đảm hài hòa lợi ích kinh tế và phát huy tối đa sức mạnh đồng thuận toàn dân tộc.
+                              </span>
+                            </div>
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            key="warning"
+                            initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                            transition={{ duration: 0.25 }}
+                            className="p-4 rounded-xl border bg-red-950/30 border-red-500/45 text-red-300 text-xs flex items-center space-x-3 shadow-[0_0_20px_rgba(239,68,68,0.15)]"
+                          >
+                            <AlertTriangle className="w-5 h-5 flex-shrink-0 text-red-400 animate-pulse" />
+                            <div>
+                              <span className="font-semibold block text-red-200">
+                                Cảnh báo hệ thống: Vi phạm nguyên tắc bảo đảm liên minh!
+                              </span>
+                              <span className="text-red-300/80 text-[11px] mt-0.5 block space-y-0.5">
+                                {!principle1 && <span className="block">• Thiếu vai trò lãnh đạo của GCCN: Nguy cơ chệch hướng XHCN.</span>}
+                                {!principle2 && <span className="block">• Không hài hòa lợi ích kinh tế: Khối liên minh thiếu động lực vật chất gắn kết.</span>}
+                                {!principle3 && <span className="block">• Thiếu nguyên tắc tự nguyện: Áp đặt hành chính gây bất đồng và rạn nứt xã hội.</span>}
+                              </span>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -433,71 +574,209 @@ export default function AllianceOSDashboard() {
 
               {/* Right Side Telemetry Panel (4 Columns) */}
               <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-neutral-800/80 pt-6 lg:pt-0 lg:pl-8 space-y-8">
-                {/* Metric Strip 1: Báo cáo an sinh xã hội */}
-                <div>
-                  <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-4">
-                    BÁO CÁO AN SINH XÃ HỘI
-                  </span>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-neutral-300">Bảo hiểm y tế toàn dân</span>
-                        <span className="text-neutral-400 font-mono">93.5%</span>
+                <AnimatePresence mode="wait">
+                  {activeTab === "principles" ? (
+                    <motion.div
+                      key="telemetry-principles"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.25 }}
+                      className="space-y-6"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest flex items-center space-x-1.5">
+                            <Activity className="w-3.5 h-3.5 text-neutral-400" />
+                            <span>GIÁM SÁT ĐỘ ỔN ĐỊNH</span>
+                          </span>
+                          <span
+                            className={`text-[10px] font-mono px-2 py-0.5 rounded-full border transition-colors ${
+                              allPrinciplesActive
+                                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                                : activePrinciplesCount === 2
+                                ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                                : "bg-red-500/10 text-red-400 border-red-500/30"
+                            }`}
+                          >
+                            {allPrinciplesActive
+                              ? "TỐI ƯU (100%)"
+                              : activePrinciplesCount === 2
+                              ? "SUY GIẢM"
+                              : "NGUY CẤP"}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-neutral-400">
+                          Phản hồi động dựa trên 3 công tắc nguyên tắc bên trái:
+                        </p>
                       </div>
-                      <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-white rounded-full w-[93.5%]" />
-                      </div>
-                    </div>
 
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-neutral-300">Đào tạo nghề nông thôn</span>
-                        <span className="text-neutral-400 font-mono">89.2%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-white rounded-full w-[89.2%]" />
-                      </div>
-                    </div>
+                      {/* Stability Meter */}
+                      <div className="p-4 rounded-xl bg-neutral-900/60 border border-neutral-800 space-y-3.5">
+                        <div>
+                          <div className="flex justify-between text-xs mb-1.5">
+                            <span className="text-neutral-300 font-medium">
+                              Độ ổn định khối liên minh
+                            </span>
+                            <span className="text-white font-mono font-semibold">
+                              {systemStability}%
+                            </span>
+                          </div>
+                          <div className="w-full h-2 bg-neutral-800 rounded-full overflow-hidden p-0.5">
+                            <motion.div
+                              className={`h-full rounded-full transition-colors ${
+                                systemStability > 70
+                                  ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"
+                                  : systemStability > 40
+                                  ? "bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]"
+                                  : "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"
+                              }`}
+                              animate={{ width: `${systemStability}%` }}
+                              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                            />
+                          </div>
+                        </div>
 
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-neutral-300">Giảm nghèo đa chiều</span>
-                        <span className="text-neutral-400 font-mono">96.0%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-white rounded-full w-[96.0%]" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                        {/* Breakdown 1: Định hướng XHCN */}
+                        <div>
+                          <div className="flex justify-between text-[11px] mb-1">
+                            <span className="text-neutral-400">Định hướng XHCN (GCCN)</span>
+                            <span className="text-neutral-300 font-mono">
+                              {principle1 ? "100%" : "25.0%"}
+                            </span>
+                          </div>
+                          <div className="w-full h-1 bg-neutral-800 rounded-full overflow-hidden">
+                            <motion.div
+                              className={`h-full rounded-full ${
+                                principle1 ? "bg-white" : "bg-neutral-600"
+                              }`}
+                              animate={{ width: principle1 ? "100%" : "25%" }}
+                              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                            />
+                          </div>
+                        </div>
 
-                {/* Metric Strip 2: Tốc độ cơ cấu lao động */}
-                <div>
-                  <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-4">
-                    CHUYỂN DỊCH CƠ CẤU
-                  </span>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-neutral-300">Công nghiệp & Dịch vụ</span>
-                        <span className="text-neutral-400 font-mono">+14.8%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-white rounded-full w-[78%]" />
-                      </div>
-                    </div>
+                        {/* Breakdown 2: Gắn kết kinh tế */}
+                        <div>
+                          <div className="flex justify-between text-[11px] mb-1">
+                            <span className="text-neutral-400">Gắn kết kinh tế & thị trường</span>
+                            <span className="text-neutral-300 font-mono">
+                              {principle2 ? "96.5%" : "30.0%"}
+                            </span>
+                          </div>
+                          <div className="w-full h-1 bg-neutral-800 rounded-full overflow-hidden">
+                            <motion.div
+                              className={`h-full rounded-full ${
+                                principle2 ? "bg-white" : "bg-neutral-600"
+                              }`}
+                              animate={{ width: principle2 ? "96.5%" : "30%" }}
+                              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                            />
+                          </div>
+                        </div>
 
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-neutral-300">Lao động số hóa 4.0</span>
-                        <span className="text-neutral-400 font-mono">+22.4%</span>
+                        {/* Breakdown 3: Đồng thuận xã hội */}
+                        <div>
+                          <div className="flex justify-between text-[11px] mb-1">
+                            <span className="text-neutral-400">Đồng thuận xã hội (Tự nguyện)</span>
+                            <span className="text-neutral-300 font-mono">
+                              {principle3 ? "94.8%" : "18.0%"}
+                            </span>
+                          </div>
+                          <div className="w-full h-1 bg-neutral-800 rounded-full overflow-hidden">
+                            <motion.div
+                              className={`h-full rounded-full ${
+                                principle3 ? "bg-white" : "bg-neutral-600"
+                              }`}
+                              animate={{ width: principle3 ? "94.8%" : "18%" }}
+                              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-white rounded-full w-[65%]" />
+
+                      {/* Educational note */}
+                      <p className="text-[11px] text-neutral-500 leading-relaxed">
+                        Chỉ số mô phỏng nguyên lý Chủ nghĩa Mác - Lênin: 3 nguyên tắc là điều kiện tiên quyết hữu cơ, thiếu bất kỳ nguyên tắc nào khối liên minh cũng không thể đứng vững.
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="telemetry-standard"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.25 }}
+                      className="space-y-8"
+                    >
+                      {/* Metric Strip 1: Báo cáo an sinh xã hội */}
+                      <div>
+                        <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-4">
+                          BÁO CÁO AN SINH XÃ HỘI
+                        </span>
+                        <div className="space-y-4">
+                          <div>
+                            <div className="flex justify-between text-xs mb-1">
+                              <span className="text-neutral-300">Bảo hiểm y tế toàn dân</span>
+                              <span className="text-neutral-400 font-mono">93.5%</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                              <div className="h-full bg-white rounded-full w-[93.5%]" />
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between text-xs mb-1">
+                              <span className="text-neutral-300">Đào tạo nghề nông thôn</span>
+                              <span className="text-neutral-400 font-mono">89.2%</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                              <div className="h-full bg-white rounded-full w-[89.2%]" />
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between text-xs mb-1">
+                              <span className="text-neutral-300">Giảm nghèo đa chiều</span>
+                              <span className="text-neutral-400 font-mono">96.0%</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                              <div className="h-full bg-white rounded-full w-[96.0%]" />
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
+
+                      {/* Metric Strip 2: Tốc độ cơ cấu lao động */}
+                      <div>
+                        <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-4">
+                          CHUYỂN DỊCH CƠ CẤU
+                        </span>
+                        <div className="space-y-4">
+                          <div>
+                            <div className="flex justify-between text-xs mb-1">
+                              <span className="text-neutral-300">Công nghiệp & Dịch vụ</span>
+                              <span className="text-neutral-400 font-mono">+14.8%</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                              <div className="h-full bg-white rounded-full w-[78%]" />
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between text-xs mb-1">
+                              <span className="text-neutral-300">Lao động số hóa 4.0</span>
+                              <span className="text-neutral-400 font-mono">+22.4%</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                              <div className="h-full bg-white rounded-full w-[65%]" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </div>
