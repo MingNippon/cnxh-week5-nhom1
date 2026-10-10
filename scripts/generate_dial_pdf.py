@@ -214,19 +214,19 @@ html_content = f"""<!DOCTYPE html>
 
       <!-- Member Allocation Box -->
       <div class="card" style="max-width: 630px; margin: 0 auto; text-align: left; padding: 11px 14px;">
-        <div style="font-size: 9px; font-family: monospace; color: #A1A1AA; margin-bottom: 6px; text-transform: uppercase;">
-          ĐƠN VỊ THỰC HIỆN: NHÓM 1 • TRƯỞNG NHÓM: ĐÀO ĐỨC MINH
+        <div style="font-size: 9px; font-family: monospace; color: #FBBF24; margin-bottom: 6px; text-transform: uppercase; font-weight: bold;">
+          PHÂN CÔNG 8 TÁC CHIẾN • NHÓM 1 • TRƯỞNG NHÓM: ĐÀO ĐỨC MINH
         </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 8px; color: #D4D4D8;">
-          <div>• <b>Trần Hải Đăng:</b> GCCN & Nông dân</div>
-          <div>• <b>Nguyễn Văn Nam:</b> Tính tất yếu 2 góc độ</div>
-          <div>• <b>Bùi Minh Lâm:</b> Liên minh Kinh tế</div>
-          <div>• <b>Nguyễn Viết Ngọc Duy:</b> Chính trị - Xã hội</div>
-          <div>• <b>Trần Viết Cường:</b> 3 Nguyên tắc bất biến</div>
-          <div>• <b>Lưu Thế An:</b> Chuỗi giá trị 4 Nhà</div>
-          <div>• <b>Đặng Quốc Khánh:</b> Nông nghiệp 4.0 & Case</div>
-          <div>• <b>Nguyễn Đức Anh:</b> Biên tập & Đồ họa</div>
-          <div style="color: #FBBF24;">• <b>Đào Đức Minh:</b> Thiết kế & Điều phối</div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 7.5px; color: #D4D4D8;">
+          <div>• <b>Trần Hải Đăng:</b> Role 1 - Xuất PNG 4K & PDF Master</div>
+          <div>• <b>Nguyễn Văn Nam:</b> Role 2 - Soát lỗi lý luận Chương 5</div>
+          <div>• <b>Bùi Minh Lâm:</b> Role 3 - Thuyết minh (Cơ cấu & Tất yếu)</div>
+          <div>• <b>Nguyễn Viết Ngọc Duy:</b> Role 4 - Thuyết minh (3 Trụ cột & 4 Nhà)</div>
+          <div>• <b>Trần Viết Cường:</b> Role 5 - QA & Test đa thiết bị</div>
+          <div>• <b>Lưu Thế An:</b> Role 6 - Video Teaser Showcase 1080p</div>
+          <div>• <b>Đặng Quốc Khánh:</b> Role 7 - QR Code Hub & Poster bìa</div>
+          <div>• <b>Nguyễn Đức Anh:</b> Role 8 - Kịch bản 2p & Nộp Padlet</div>
+          <div style="color: #FBBF24;">• <b>Đào Đức Minh:</b> Leader - Tổng chỉ huy & Web App</div>
         </div>
       </div>
     </div>
